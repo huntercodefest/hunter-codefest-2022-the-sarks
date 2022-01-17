@@ -1,34 +1,40 @@
 .image {
-    width: 30%;
-    height: 8rem;
-    overflow: hidden;
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px;
-    margin: 1%;
-  }
+  width: 30%;
+  height: 8rem;
+  overflow:hidden;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  margin: 1%;
+}
 
-  .name{
-      font-size: 20px;
-      font-weight: 650;
-  }
+.name {
+  font-size: 20px;
+  font-weight: 650;
+}
 
-  .image img {
-    width: 100%;
-    object-fit: cover;
-  }
-  
-  .description {
-    width: 100%;
-    object-fit: cover;
-  }
+.image img {
+  width: 100%;
+  object-fit: cover;
+}
 
-  .card {
-    width: 50%;
-    background-color: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    padding: 1%;
-    margin: 1%;
-  }
+.description {
+  width: 100%;
+  object-fit: cover;
+}
+
+.card {
+  width: 95%;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 1%;
+  margin: 1%;
+}
+
+.button {
+  position: relative;
+  float: right;
+  font-size: 15px;
+}
