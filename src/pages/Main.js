@@ -1,86 +1,133 @@
 import StudyList from "../components/studylocations/StudyList";
 import Map from "../components/studylocations/Map";
 import classes from "./Main.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Script from "react-load-script"; // Import react script library to load Google object
+import Test from "../components/studylocations/gettest";
+import Test2 from "../components/studylocations/gettest2";
+import { render } from "@testing-library/react";
 
 function MainPage() {
-  const locations = [
-    {
-      id: "1",
-      name: "White Noise Coffee Co",
-      image:
-        "https://lh5.googleusercontent.com/p/AF1QipNt39vBMcW_oPq3u8MaR_ipCySoIWl9ETTCgXQT=w114-h114-n-k-no",
-      address: "41-02 162nd St, Flushing, NY 11358",
-      rating: "4.3",
-      description:
-        "Chic, funky craft coffee shop & cafe offering light fare in an artsy space with seating & Wi-Fi.",
-      latitude: "40.761289",
-      longitude: "-73.8040306",
-    },
-
-    {
-      id: "2",
-      name: "Molasses Books",
-      image:
-        "https://images.squarespace-cdn.com/content/v1/552d7a52e4b0ede95614e9c8/1498227007215-8K1PB1Q22XF0QWXU80F8/DSC_0077_1.jpg",
-      address: "770 Hart St, Brooklyn, NY 11237",
-      rating: "4.6",
-      description:
-        "Used bookstore & cafe where patrons can barter volumes for coffee, beer or more books.",
-      latitude: "40.7006193",
-      longitude: "-73.9259459",
-    },
-
-    {
-      id: "3",
-      name: "Queens Library - Elmhurst",
-      image:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/JkP_iNgkV26YewTyaETA8g/1000s.jpg",
-      address: "86-07 Broadway Elmhurst, NY 11373",
-      rating: "4.3",
-      description: "Public library in Queens, New York",
-      latitude: "40.738428",
-      longitude: "-73.8792888",
-    },
-  ];
-
-  const [lat, setLat] = useState(40.7284755);
-  const [long, setLong] = useState(-73.9881622);
+  const [lat, setLat] = useState(40.6284755);
+  const [long, setLng] = useState(-73.9881622);
   const [zoom, setZoom] = useState(12);
+  const [photo, setPhoto] = useState("");
+  const [locationList, setLocationList] = useState([]);
+  const [tempList, setTempList] = useState([]);
 
-  function resetLocation() {
-    //setlocationPicked(false);
-    setLat(40.7284755);
-    setLong(-73.9881622);
-    setZoom(12);
+  /*global google*/ // To disable any eslint 'google not defined' errors
+  function initialize() {
+    console.log("lat: ", lat);
+    console.log("long: ", long);
+    var temp = new google.maps.LatLng(lat, long);
+    var map = new google.maps.Map(document.getElementById("map"), {
+      center: temp,
+      zoom: 12,
+    });
+
+    var request = {
+      location: temp,
+      radius: "500",
+      query: "libraries+coffee places",
+    };
+
+    var service = new google.maps.places.PlacesService(map);
+    service.textSearch(request, callback);
   }
 
-  /*function goToLocation() {
-    setlocationPicked(true);
-  }*/
+  function callback(results, status) {
+    setTempList([]);
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        var place = results[i];
 
-  //<StudyList locationlist={locations} goToLocation={goToLocation} />
-  //{locationPicked ? null : <Map lat={lat} long={long} zoom={12} />}
-  //{locationPicked ? <Map lat={lat} long={long} zoom={13} /> : null}
-  //<Map lat={lat} long={long} zoom={12} />
-  //Lat: {lat} Long: {long}
-  //      <button onClick={resetLocation}>Reset</button>
+        if (
+          typeof place.photos !== "undefined" &&
+          place.business_status == "OPERATIONAL"
+        ) {
+          tempList.push(place);
+        }
+      }
+      setLocationList(tempList);
+    }
+    //console.log(locationList);
+  }
+
+  function goToNYC() {
+    setLat(40.6284755);
+    setLng(-73.9881622);
+    setLocationList([]);
+    setZoom(12);
+    var temp = new google.maps.LatLng(lat, long);
+    var map = new google.maps.Map(document.getElementById("map"), {
+      center: temp,
+      zoom: 12,
+    });
+
+    var request = {
+      location: temp,
+      radius: "500",
+      query: "libraries+coffee places",
+    };
+    var service = new google.maps.places.PlacesService(map);
+    service.textSearch(request, callback);
+  }
+
+  function goToLocation() {
+    {
+      var location = new google.maps.LatLng(lat, long);
+      var map = new google.maps.Map(document.getElementById("map"), {
+        center: location,
+        zoom: zoom,
+      });
+    }
+  }
+
+  function goToMiami() {
+    setLat(25.7617);
+    setLng(-80.1918);
+    //setLat(36.7783);
+    //setLng(-119.4179);
+    //setLat(0);
+    //setLng(0);
+    setLocationList([]);
+    setZoom(12);
+    var temp = new google.maps.LatLng(lat, long);
+    var map = new google.maps.Map(document.getElementById("map"), {
+      center: temp,
+      zoom: 12,
+    });
+    var request = {
+      location: temp,
+      radius: "500",
+      query: "libraries+coffee shops",
+    };
+    var service = new google.maps.places.PlacesService(map);
+    service.textSearch(request, callback);
+  }
+
   return (
-    <section>
-      <h1>
+    <section className={classes.main}>
+      <Script
+        url="https://maps.googleapis.com/maps/api/js?key=AIzaSyD33Yq8lvht-zLtDCh01CBnavxUeb-_4kE&libraries=places"
+        onLoad={initialize}
+      />
+      <div className={classes.mapcontainer} id="map"></div>
+      <h1 className={classes.listheading}>
         Recommended Results
-        <button onClick={resetLocation}>Reset</button>
+        <button onClick={goToNYC}>Go to NYC</button>
+        <button onClick={goToMiami}>Go To Miami</button>
       </h1>
-      <div className={classes.main}>
+      <div className={classes.studylist} onChange={initialize}>
         <StudyList
-          locationlist={locations}
+          locationList={locationList}
+          goToLocation={goToLocation}
           setLat={(value) => setLat(value)}
-          setLong={(value) => setLong(value)}
+          setLng={(value) => setLng(value)}
           setZoom={(value) => setZoom(value)}
-          resetLocation={resetLocation}
         />
-        <Map lat={lat} long={long} zoom={zoom} />
       </div>
+      {console.log(locationList)}
     </section>
   );
 }

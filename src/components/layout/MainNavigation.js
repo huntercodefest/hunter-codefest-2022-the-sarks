@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
+import SearchBar from "./SearchBar";
 
 function MainNavigation() {
+
+
   return (
     <header className={classes.header}>
       <button className={classes.icon}>
         <Link to="/">Study Bubble</Link>
       </button>
-      <form>Enter zip</form>
+      <SearchBar/>
       <nav>
         <ul>
           <button>

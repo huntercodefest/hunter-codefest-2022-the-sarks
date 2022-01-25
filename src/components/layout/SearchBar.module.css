@@ -1,0 +1,20 @@
+.search {
+  width: 750px;
+  font-size: 1rem;
+  color: gray;
+  background-color: #004b77;
+}
+
+.search input {
+  width: 500px;
+  position: relative;
+  left: 125px;
+}
+
+.search button {
+  position: relative;
+  left: 125px;
+  width: 40px;
+  color: black;
+  margin: 2px;
+}

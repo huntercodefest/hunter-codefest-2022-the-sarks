@@ -1,7 +1,9 @@
 .image {
-  width: 30%;
-  height: 8rem;
-  overflow:hidden;
+  width: auto;
+  height: auto;
+  max-width: 30%;
+  max-height: 8rem;
+  overflow: hidden;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
   border-bottom-right-radius: 6px;
