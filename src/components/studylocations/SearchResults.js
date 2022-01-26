@@ -2,7 +2,7 @@ import StudyList from "./StudyList";
 import classes from "./SearchResults.module.css";
 import { useState } from "react";
 import Script from "react-load-script"; // Import react script library to load Google object
-import SearchBar from "../layout/SearchBar";
+import SearchBar from "./SearchBar";
 
 function SearchResults(props) {
   const [lat, setLat] = useState(40.6284755);
@@ -13,8 +13,7 @@ function SearchResults(props) {
 
   /*global google*/ // To disable any eslint 'google not defined' errors
   function initialize() {
-    //console.log("lat: ", lat);
-    //console.log("long: ", long);
+    //initializes results based on some default parameters upon loading the page
     var temp = new google.maps.LatLng(lat, long);
     var map = new google.maps.Map(document.getElementById("map"), {
       center: temp,
@@ -22,6 +21,7 @@ function SearchResults(props) {
     });
 
     var request = {
+      //define the search parameters
       location: temp,
       radius: "500",
       query: "libraries",
@@ -36,8 +36,8 @@ function SearchResults(props) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
         var place = results[i];
-
         if (
+          //only save the results that have at least one photo and are currently operational (not closed)
           typeof place.photos !== "undefined" &&
           place.business_status == "OPERATIONAL"
         ) {
@@ -49,10 +49,11 @@ function SearchResults(props) {
     //console.log(locationList);
   }
 
-  function goToNYC() {
-    setLat(40.6284755);
-    setLng(-73.9881622);
-    setLocationList([]);
+  function newSearch() {
+    //resets search results and makes a new search
+    //console.log("lat:", lat);
+    //console.log("long:", long);
+    setLocationList([]); //purge results of previous search by resetting locationList to an empty array
     setZoom(12);
     var temp = new google.maps.LatLng(lat, long);
     var map = new google.maps.Map(document.getElementById("map"), {
@@ -61,28 +62,7 @@ function SearchResults(props) {
     });
 
     var request = {
-      location: temp,
-      radius: "500",
-      query: "libraries+coffee places",
-    };
-    var service = new google.maps.places.PlacesService(map);
-    service.textSearch(request, callback);
-  }
-
-  function newSearch() {
-    //setLat(25.03428);
-    //setLng(-77.39627999999999);
-    console.log("lat:", lat);
-    console.log("long:", long);
-    setLocationList([]);
-    setZoom(12);
-    var temp = new google.maps.LatLng(lat, long);
-    var map = new google.maps.Map(document.getElementById("map"), {
-      center: temp,
-      zoom: 10,
-    });
-
-    var request = {
+      //define search parameters
       location: temp,
       radius: "500",
       query: "libraries",
@@ -92,36 +72,14 @@ function SearchResults(props) {
   }
 
   function goToLocation() {
+    //function for changing map view to specific location in list of locations
     {
       var location = new google.maps.LatLng(lat, long);
       var map = new google.maps.Map(document.getElementById("map"), {
         center: location,
-        zoom: zoom,
+        zoom: 15,
       });
     }
-  }
-
-  function goToMiami() {
-    setLat(25.7617);
-    setLng(-80.1918);
-    //setLat(36.7783);
-    //setLng(-119.4179);
-    //setLat(0);
-    //setLng(0);
-    setLocationList([]);
-    setZoom(12);
-    var temp = new google.maps.LatLng(lat, long);
-    var map = new google.maps.Map(document.getElementById("map"), {
-      center: temp,
-      zoom: 12,
-    });
-    var request = {
-      location: temp,
-      radius: "500",
-      query: "libraries+coffee shops",
-    };
-    var service = new google.maps.places.PlacesService(map);
-    service.textSearch(request, callback);
   }
 
   return (
@@ -137,11 +95,7 @@ function SearchResults(props) {
       />
       {console.log(locationList)}
       <div className={classes.mapcontainer} id="map"></div>
-      <h1 className={classes.listheading}>
-        Recommended Results
-        <button onClick={goToNYC}>Go to NYC</button>
-        <button onClick={goToMiami}>Go To Miami</button>
-      </h1>
+      <h1 className={classes.listheading}>Recommended Results</h1>
       <div className={classes.studylist} onChange={initialize}>
         <StudyList
           locationList={locationList}

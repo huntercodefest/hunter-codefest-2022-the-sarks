@@ -3,26 +3,32 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+/* Google maps */
 .mapcontainer {
   width: 600px;
   height: 400px;
   position: absolute;
-  top: 175px;
+  top: 350px;
   left: 46rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
+/* Recommended Results heading */
 .listheading {
     width: 600px;
     position: relative;
-    top: -1rem;
-    left: -47rem;
+    top: -10 rem;
+    left: -57rem;
+    color: black;
 }
+
+/* List of study locations */
 .studylist {
-    width: 1150px;
+    width: 1200px;
     height: 40rem;
     position: absolute;
-    top: 10rem;
-    right: 14rem;
+    top: 350px;
+    right: 10rem;
 }
 

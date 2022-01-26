@@ -1,11 +1,5 @@
 import StudyLocation from "./StudyLocation";
 import classes from "./StudyList.module.css";
-import { Map, GoogleApiWrapper } from "google-map-react";
-import { useState } from "react";
-//Google API key: AIzaSyD33Yq8lvht-zLtDCh01CBnavxUeb-_4kE
-//Yelp API key: FJcuXOHgPwcBhHe57NTsfPSzmJuCyCgRnJ3Q0F-Kf87irFmTsNDeBclp3NGNMT50l8QkAHJ_1lCnFNbElp2Rzv3qDHM8Af4lOv7L2XLmg13gRnHWX9b9EGyd3i3qYXYx
-
-//<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD33Yq8lvht-zLtDCh01CBnavxUeb-_4kE&libraries=places"></script>
 
 function StudyList(props) {
   return (
