@@ -1,8 +1,12 @@
 .search {
   width: 750px;
   font-size: 1rem;
+  height: 1px;
   color: gray;
   background-color: #004b77;
+  position: relative;
+  top: -3.1rem;
+  left: 8rem;
 }
 
 .search input {
