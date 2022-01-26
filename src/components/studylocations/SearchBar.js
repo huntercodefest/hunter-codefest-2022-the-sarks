@@ -7,6 +7,7 @@ function SearchBar(props) {
   var geocoder;
   var map2;
   const inputRef = useRef();
+  const API_key = process.env.REACT_APP_API_KEY; //Google API key
 
   function initialize() {
     geocoder = new google.maps.Geocoder();
@@ -50,7 +51,7 @@ function SearchBar(props) {
   return (
     <div className={classes.search}>
       <Script
-        url="https://maps.googleapis.com/maps/api/js?key=AIzaSyD33Yq8lvht-zLtDCh01CBnavxUeb-_4kE&libraries=places"
+        url={"https://maps.googleapis.com/maps/api/js?key=" + API_key + "&libraries=places"}
         onLoad={initialize}
       />
       <div id="searchmap"></div>

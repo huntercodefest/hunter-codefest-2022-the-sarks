@@ -10,6 +10,7 @@ function SearchResults(props) {
   const [zoom, setZoom] = useState(12);
   const [locationList, setLocationList] = useState([]);
   const [tempList, setTempList] = useState([]);
+  const API_key = process.env.REACT_APP_API_KEY; //Google API key
 
   /*global google*/ // To disable any eslint 'google not defined' errors
   function initialize() {
@@ -85,7 +86,7 @@ function SearchResults(props) {
   return (
     <section className={classes.main}>
       <Script
-        url="https://maps.googleapis.com/maps/api/js?key=AIzaSyD33Yq8lvht-zLtDCh01CBnavxUeb-_4kE&libraries=places"
+        url={"https://maps.googleapis.com/maps/api/js?key=" + API_key + "&libraries=places"}
         onLoad={initialize}
       />
       <SearchBar
@@ -93,7 +94,6 @@ function SearchResults(props) {
         setLng={(value) => setLng(value)}
         newSearch={newSearch}
       />
-      {console.log(locationList)}
       <div className={classes.mapcontainer} id="map"></div>
       <h1 className={classes.listheading}>Recommended Results</h1>
       <div className={classes.studylist} onChange={initialize}>
