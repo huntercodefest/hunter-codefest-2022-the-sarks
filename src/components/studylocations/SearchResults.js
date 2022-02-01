@@ -11,12 +11,14 @@ function SearchResults(props) {
   const [locationList, setLocationList] = useState([]);
   const [tempList, setTempList] = useState([]);
   const API_key = process.env.REACT_APP_API_KEY; //Google API key
+  var temp;
+  var map;
 
   /*global google*/ // To disable any eslint 'google not defined' errors
   function initialize() {
     //initializes results based on some default parameters upon loading the page
-    var temp = new google.maps.LatLng(lat, long);
-    var map = new google.maps.Map(document.getElementById("map"), {
+    temp = new google.maps.LatLng(lat, long);
+    map = new google.maps.Map(document.getElementById("map"), {
       center: temp,
       zoom: 12,
     });
@@ -56,8 +58,8 @@ function SearchResults(props) {
     //console.log("long:", long);
     setLocationList([]); //purge results of previous search by resetting locationList to an empty array
     setZoom(12);
-    var temp = new google.maps.LatLng(lat, long);
-    var map = new google.maps.Map(document.getElementById("map"), {
+    temp = new google.maps.LatLng(lat, long);
+    map = new google.maps.Map(document.getElementById("map"), {
       center: temp,
       zoom: 12,
     });
@@ -76,9 +78,15 @@ function SearchResults(props) {
     //function for changing map view to specific location in list of locations
     {
       var location = new google.maps.LatLng(lat, long);
-      var map = new google.maps.Map(document.getElementById("map"), {
+      map = new google.maps.Map(document.getElementById("map"), {
         center: location,
         zoom: 15,
+      });
+
+      // create a new map marker at the specified location when clicking the "Locate" button
+      new google.maps.Marker({
+        position: location,
+        map: map
       });
     }
   }
